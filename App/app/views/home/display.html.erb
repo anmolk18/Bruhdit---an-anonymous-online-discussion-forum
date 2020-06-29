@@ -1,0 +1,4 @@
+<%= content_tag(:h1, "Home Page")%>
+<%= content_tag(:h2, "Hello #{@current_user.user_name}")%>
+<%= button_to "Log out", '/logout', method: :post%>
+

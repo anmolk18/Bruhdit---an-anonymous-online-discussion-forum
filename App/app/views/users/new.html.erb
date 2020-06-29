@@ -1,0 +1,21 @@
+<%= render 'layouts/flash'%>
+<%= form_for @user do |f| %>
+<div class="input-box">
+  <%= f.text_field :user_name %>
+   <%= f.label :user_name %>
+</div>
+  <br><br>
+<div class="input-box">
+  <%= f.password_field :password %>
+   <%= f.label :password %>
+  <br><br>
+</div>
+<div class="input-box">
+  <%= f.password_field :password_confirmation %>
+   <%= f.label :password_confirmation %>
+  <br><br>
+</div>
+<div class="submit-box">
+  <%= f.submit "Sign Up" %>
+</div>
+<% end %>

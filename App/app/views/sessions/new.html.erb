@@ -1,0 +1,15 @@
+<%= form_with url: '/login' do |f| %>
+<div class="input-box">
+  <%= f.text_field :user_name %>
+   <%= f.label :user_name %>
+</div>
+  <br><br>
+<div class="input-box">
+  <%= f.password_field :password %>
+   <%= f.label :password %>
+  <br><br>
+</div>
+<div class="submit-box">
+  <%= f.submit "Login" %>
+</div>
+<% end %>
