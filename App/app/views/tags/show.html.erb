@@ -1,0 +1,4 @@
+<%= content_tag(:h1, @tag.name)%>
+<% @posts.each do |post| %>
+    <%= content_tag(:p, link_to(post.title, post_path(post)))%> <br>
+<%end%>
