@@ -1,4 +1,10 @@
 <%= content_tag(:h1, "Home Page")%>
-<%= content_tag(:h2, "Hello #{@current_user.user_name}")%>
+<%= content_tag(:h3, "Hello #{@current_user.user_name}")%>
 <%= button_to "Log out", '/logout', method: :post%>
+<%@posts.each do |post|%>
+    <%= content_tag(:h2, link_to(post.title, post_path(post))) %>
+    <%post.tags.each do |tag|%>
+        <%=link_to tag.name, tag_path(tag)%> <br>
+    <%end%>
+<%end%>
 

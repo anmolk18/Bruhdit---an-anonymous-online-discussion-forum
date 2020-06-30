@@ -1,0 +1,10 @@
+<%=render 'layouts/flash'%>
+<%=form_for @post do |f|%>
+  Title: <%= f.text_field :title %><br />
+  Body: <%= f.text_area :body %><br />
+  Tags: <%= f.collection_check_boxes(:tag_ids, @tags, :id, :name)%>
+  <%= f.fields_for :tags, @post.tags.build do |tag| %>
+    <%= tag.text_field :name %> <br>
+  <%end%>
+  <%=f.submit 'Submit'%>
+<%end%>

@@ -1,0 +1,4 @@
+<%= content_tag(:h1,"Tags:")%>
+<% @tags.each do |tag| %>
+    <%= content_tag(:p, link_to(tag.name.titleize, tag_path(tag)))%>
+<%end%>
