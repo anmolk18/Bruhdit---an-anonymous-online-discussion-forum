@@ -6,4 +6,6 @@ class User < ApplicationRecord
     # has_many :tags, through: :posts
     # has_many :messages
     validates :user_name, uniqueness: true
+    validates :user_name, format: { with: /\A[a-zA-Z0-9]+\Z/ }
+    validates :user_name, length: {minimum: 3, maximum: 30}
 end

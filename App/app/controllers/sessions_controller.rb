@@ -1,8 +1,8 @@
 class SessionsController < ApplicationController
     skip_before_action :authorized, only: [:new, :create, :welcome]
+    before_action :redirect_to_home, only: [:welcome, :new]
 
     def welcome
-      redirect_to '/home' if logged_in?
     end
 
     def new
@@ -15,7 +15,8 @@ class SessionsController < ApplicationController
           session[:user_id] = @user.id
           redirect_to '/home'
         else
-          flash[:errors] = "Username or Password Invalid"
+          flash[:errors] ||= [] 
+          flash[:errors] << "Username or Password Invalid"
           redirect_to '/login'
         end
     end
@@ -26,4 +27,9 @@ class SessionsController < ApplicationController
         redirect_to '/'
     end
   
+    private
+
+    def redirect_to_home
+      redirect_to '/home' if logged_in?
+    end
 end

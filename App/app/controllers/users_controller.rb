@@ -2,7 +2,9 @@ class UsersController < ApplicationController
     skip_before_action :authorized, only: [:new, :create]
     #Sign Up for a user.
     def new
+        redirect_to '/home' if logged_in?
         @user = User.new()
+            
     end
 
     def create
