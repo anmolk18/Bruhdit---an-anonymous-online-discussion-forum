@@ -6,6 +6,15 @@
 <% @post.tags.each {|tag| %>
     <p><%=tag.name%></p>
 <% } %>
+<h3>Comments</h3>
+<%= button_to "Add a Comment", {controller: "comments", action: "new"}, method: :get, params: {user_id: @current_user.id, post_id: @post.id}%>
+<% @comments.each {|comment| %>
+    <p><%=comment.user.user_name%></p>
+    <p><%=comment.body%></p>
+<% } %>
+
+
+
 
 <%if @current_user.id == @post.user_id%>
     <%= button_to "Edit Post", edit_post_path(@post), method: :get%>

@@ -1,8 +1,10 @@
 class PostsController < ApplicationController
     before_action :current_post, only: [:show, :edit, :update, :destroy]
+    before_action :allowed_user, only: [:edit, :update, :destroy]
     def new
         @post = Post.new
         @tags = Tag.all
+        @user = current_user
     end
 
     def create
@@ -13,6 +15,7 @@ class PostsController < ApplicationController
 
     def show
         @current_user = current_user
+        @comments = @post.comments
     end
 
     def edit
@@ -47,5 +50,9 @@ class PostsController < ApplicationController
             flash[:errors] = @post.errors.full_messages
             redirect_to error_path
         end
+    end
+
+    def allowed_user
+        redirect_to post_path(@post) if current_user.id != @post.user.id
     end
 end
