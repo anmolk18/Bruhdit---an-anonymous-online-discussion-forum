@@ -29,20 +29,20 @@
 
 <div class="content">
   <h2>Top Posts</h2>
-      <div class = "container">
+    <div class = "container">
+      <% @posts.each do |post| %>
         <div>
-          <%= content_tag(:h2, link_to(post.title, post_path(post))) %>
-          <ul>
-          <%post.tags.each do |tag|%>
-              <li><%=link_to tag.name, tag_path(tag)%> </li>
-          <%end%>
-          </ul>
-          <div>
-        <%end%>
-      </div>
-
+          <%= link_to(post.title, post_path(post))%>  <br>
+            <ul>
+              <% post.tags.each do |tag|%>
+                <li><%= link_to(tag.name, tag_path(tag))%> </li> 
+              <%end%>
+            </ul>
+        </div>
+      <%end%>
+    </div>
 </div>
 
 
 </body>
-</html>
+</head>
