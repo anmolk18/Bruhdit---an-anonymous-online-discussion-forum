@@ -20,22 +20,25 @@
   <h2>Home</h2>
 </div>
 
-<div class="topnav">
-  <a href="/home">Home</a>
-  <a href="/posts">Posts</a>
-  <a href="/tags">Tags</a>
-</div>
+<section id = "navbar", class = "wrapper">
+    <ul>
+      <li> <a href="/home">Home</a> </li>
+      <li><a href="/posts">Posts</a> </li>
+      <li><a href="/tags">Tags</a> </li>
+    <ul>
+</section>
 
 
 <div class="content">
   <h2>Top Posts</h2>
     <div class = "container">
-      <% @posts.each do |post| %>
+      <% @posts.each do |post|%>
         <div>
-          <%= link_to(post.title, post_path(post))%>  <br>
+          <%= link_to(post.title, post_path(post))%> 
+          <%= post.body%>
             <ul>
               <% post.tags.each do |tag|%>
-                <li><%= link_to(tag.name, tag_path(tag))%> </li> 
+                <li><%= link_to(tag.name, tag_path(tag))%> </li>
               <%end%>
             </ul>
         </div>
@@ -43,6 +46,5 @@
     </div>
 </div>
 
-
 </body>
-</head>
+</html>
