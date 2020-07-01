@@ -4,10 +4,18 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/home', to: 'home#display'
-  root :to =>'sessions#welcome'
+  root :to => 'sessions#welcome'
+  
   resources :comments
-  resources :post_tags
   resources :tags
+
+  resources :comments do 
+    resources :comment_likes 
+  end 
+
+  resources :posts do
+    resources :likes
+  end
   resources :posts
   resources :users
   

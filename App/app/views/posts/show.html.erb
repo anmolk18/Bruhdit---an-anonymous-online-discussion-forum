@@ -7,6 +7,14 @@
     <p><%=tag.name%></p>
 <% } %>
 
+<p><%= @post.likes.count %> <%= (@post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
+<% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
+<% if pre_like %>
+  <%= button_to 'Unlike', post_like_path(@post, pre_like), method: :delete %>
+<% else %>
+  <%= button_to 'Like', post_likes_path(@post), method: :post %>
+<% end %>
+
 <%if @current_user.id == @post.user_id%>
     <%= button_to "Edit Post", edit_post_path(@post), method: :get%>
     <%= button_to "Delete Post", post_path(@post), method: :delete%>
@@ -17,10 +25,11 @@
 <% @comments.each {|comment| %>
     <p><%=comment.user.user_name%></p>
     <p><%=comment.body%></p>
+    <p><%= comment.comment_likes.count %> <%= (comment.comment_likes.count) == 1 ? 'Like' : 'Likes'%></p>
+    <%= button_to 'Like', comment_comment_likes_path(comment), method: :post%>
     <%if @current_user.id == comment.user_id%>
     <%= button_to "Edit Comment", edit_comment_path(comment), method: :get, params: {user_id: @current_user.id, post_id: @post.id}%>
     <%= button_to "Delete Comment", comment_path(comment), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
 <%end%>
 <% } %>
-
 

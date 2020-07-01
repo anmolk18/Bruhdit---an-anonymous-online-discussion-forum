@@ -30,6 +30,3 @@ t3 = Tag.create(name: "school")
 pt1 = PostTag.create(post_id: p1.id, tag_id: t1.id)
 pt2 = PostTag.create(post_id: p1.id, tag_id: t2.id)
 pt3 = PostTag.create(post_id: p2.id, tag_id: t3.id)
-
-
-
