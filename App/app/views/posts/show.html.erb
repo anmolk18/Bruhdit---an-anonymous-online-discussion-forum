@@ -13,9 +13,6 @@
     <p><%=comment.body%></p>
 <% } %>
 
-
-
-
 <%if @current_user.id == @post.user_id%>
     <%= button_to "Edit Post", edit_post_path(@post), method: :get%>
     <%= button_to "Delete Post", post_path(@post), method: :delete%>
