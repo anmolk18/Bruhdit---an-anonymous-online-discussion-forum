@@ -11,6 +11,7 @@ class CommentLikesController < ApplicationController
     end
 
     def destroy
+        @post = Post.find(params[:post_id])
         if already_liked?
           @comment_like.destroy
         end
