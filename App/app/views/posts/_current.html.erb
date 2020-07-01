@@ -1,0 +1,25 @@
+<h1><%=@post.title%></h1>
+<p><%=@post.body%></p>
+
+<h3>Post tags</h3>
+
+<% @post.tags.each {|tag| %>
+    <p><%=tag.name%></p>
+<% } %>
+
+<%if @current_user_id == @post.user_id%>
+    <%= button_to "Edit Post", edit_post_path(@post), method: :get%>
+    <%= button_to "Delete Post", post_path(@post), method: :delete%>
+<%end%>
+
+<h3>Comments</h3>
+<% @comments.each {|comment| %>
+    <p><%=comment.user.user_name%></p>
+    <p><%=comment.body%></p>
+    <%if @current_user_id == comment.user_id%>
+    <%= button_to "Edit Comment", edit_comment_path(comment), method: :get%>
+    <%= button_to "Delete Comment", comment_path(comment), method: :delete%>
+<%end%>
+<% } %>
+
+
