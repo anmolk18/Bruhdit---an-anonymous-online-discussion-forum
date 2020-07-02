@@ -42,6 +42,7 @@ class UsersController < ApplicationController
         if @user.valid?
             @user.save()
             session[:user_id] = @user.id
+            Conversation.default_convo(@user.id)
             redirect_to '/home'
         else
             flash[:errors] = @user.errors.full_messages
