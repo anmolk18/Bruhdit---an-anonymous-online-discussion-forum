@@ -1,5 +1,6 @@
 class ConversationsController < ApplicationController
-   def index
+   def show
+   @current_user = current_user
     @users = User.all
     @conversations = Conversation.all
     end
