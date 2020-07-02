@@ -1,8 +1,8 @@
 class ConversationsController < ApplicationController
-   def show
-   @current_user = current_user
-    @users = User.all
-    @conversations = Conversation.all
+   def index
+      @current_user = current_user
+      @users = User.all
+      @conversations = Conversation.all
     end
     
    def create
