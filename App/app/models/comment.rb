@@ -45,4 +45,6 @@ class Comment < ApplicationRecord
         comments = self.ordered_by_creation
         comments.first
     end 
+
+    #most commented post
 end

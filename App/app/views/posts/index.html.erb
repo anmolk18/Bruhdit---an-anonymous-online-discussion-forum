@@ -1,6 +1,7 @@
+
 <% content_for :page_container do %>
 <!-- Page Container -->
-<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px; margin-bottom:170px">    
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
   <!-- The Grid -->
   <div class="w3-row">
     <!-- Left Column -->
@@ -17,7 +18,7 @@
       </div>
       <br>
     
-     <!-- Interests --> 
+      <!-- Interests --> 
       <div class="w3-card w3-round w3-white w3-hide-small">
         <div class="w3-container">
           <p>Top 10 Tags</p>
@@ -29,60 +30,46 @@
         </div>
       </div>
       <br>
-    
     <!-- End Left Column -->
     </div>
     
     <!-- Middle Column -->
     <div class="w3-col m7">
     
+     
+
+      <% @posts.each do |post|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-         <%= content_tag(:h4, @post.title, class: "w3-left w3-circle w3-margin-right")%>
-        <span class="w3-right w3-opacity"><%= "#{pluralize(@post.likes.count, "Like")}"%></span> <br>
-        <span class="w3-right w3-opacity"><%= time_ago_in_words(@post.created_at)+ " ago"%></span>
+         <%= content_tag(:h4, link_to(post.title, post_path(post)), class: "w3-left w3-circle w3-margin-right")%>
+        <span class="w3-right w3-opacity"><%= "#{pluralize(post.likes.count, "Like")}"%></span> <br>
+        <span class="w3-right w3-opacity"><%= time_ago_in_words(post.created_at)+ " ago"%></span>
         <hr class="w3-clear">
         <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left" style="width:60px">
-        <%= content_tag(:p, @post.body, class: "w3-left")%>
+        <%= content_tag(:p, post.body, class: "w3-left")%>
           <div class="w3-row-padding" style="margin:0 -16px">
             <div class ="w3-row">
               Tags:
-              <%@post.tags.each do |tag| %>
+              <%post.tags.each do |tag| %>
                   <span class="w3-tag w3-small w3-theme-d1"><%=link_to(tag.name, tag_path(tag))%></span>
               <%end%> 
             </div>
           </div>
           <br>
           <div class ="w3-row">
-
-                <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
+                <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
                 <% if pre_like %>
-                  <%= button_to '❌ Unlike', post_like_path(@post, pre_like), method: :delete %>
+                  <%= button_to '❌ Unlike', post_like_path(post, pre_like), method: :delete %>
                 <% else %>
-                  <%= button_to '❤️ Like', post_likes_path(@post), { method: :post} %>
-                <% end %> <br>
-                <%= button_to(new_comment_path, method: :get, class: "w3-button w3-theme-d2 w3-margin-bottom", params: {user_id: @current_user.id, post_id: @post.id}) do %>
-                  <i class="fa fa-comment"></i> Add a Comment
+                  <%= button_to '❤️ Like', post_likes_path(post), { method: :post} %>
+                <% end %>         
+                <%= button_to(post_path(post), method: :get, class: "w3-button w3-theme-d2 w3-margin-bottom") do %>
+                  <i class="fa fa-comment"></i> Leave a Comment
                 <% end %>
-                
-      </div>
-      </div>
-      <div class="w3-row-padding">
-        <div class="w3-col m12">
-          <div class="w3-card w3-round w3-white">
-            <div class="w3-container w3-padding">
-              <h6 class="w3-opacity">Add a Comment</h6>
-              <%= form_for(@new_comment, url: comments_path)do |f|%>
-                <%= f.hidden_field :post_id, value: @post.id %>
-                <%= f.hidden_field :user_id, value: @current_user.id %>
-                 <%= f.text_area :body, placeholder: "Your New Comment!", class: "w3-input w3-border w3-padding"%><br />
-                  <%= button_tag( class: "w3-button w3-theme") do %>
-                    <i class="fa fa-pencil"></i> Post
-                  <% end %>
-              <%end%>
-            </div>
-          </div>
         </div>
       </div>
+      <%end%>
+      
+     
       
     <!-- End Middle Column -->
     </div>
@@ -98,5 +85,4 @@
 <!-- End Page Container -->
 </div>
 <br>
-
 <%end%>

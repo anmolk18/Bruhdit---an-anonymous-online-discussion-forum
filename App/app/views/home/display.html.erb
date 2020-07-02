@@ -41,9 +41,19 @@
           <div class="w3-card w3-round w3-white">
             <div class="w3-container w3-padding">
               <h6 class="w3-opacity">Create a New Post!</h6>
-              
-              <p contenteditable="true" class="w3-border w3-padding">Your New Post!</p>
-              <button type="button" class="w3-button w3-theme"><i class="fa fa-pencil"></i>  Post</button> 
+              <%= form_for(@new_post, url: posts_path) do |f|%>
+                 <%= f.text_field :title, placeholder: "Your Post's Title!", class: "w3-input w3-border w3-padding"%><br /> 
+                 <%= f.text_area :body, placeholder: "Your New Post!", class: "w3-input w3-border w3-padding"%><br />
+                 <%= f.collection_check_boxes(:tag_ids, @tags, :id, :name) do |b|%>
+                    <%=b.label(:"data-value" => b.value) { b.check_box + b.text}%>
+                 <% end%> <br>
+                 <%= f.fields_for :tags, @new_post.tags.build do |tag| %>
+                    <%= tag.text_field :name %> <br>
+                  <%end%>
+                  <%= button_tag( class: "w3-button w3-theme") do %>
+                    <i class="fa fa-pencil"></i> Post
+                  <% end %>
+              <%end%>
             </div>
           </div>
         </div>
@@ -67,15 +77,16 @@
           </div>
           <br>
           <div class ="w3-row">
-
                 <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
                 <% if pre_like %>
                   <%= button_to '❌ Unlike', post_like_path(post, pre_like), method: :delete %>
                 <% else %>
                   <%= button_to '❤️ Like', post_likes_path(post), { method: :post} %>
+                <% end %>         
+                <%= button_to(post_path(post), method: :get, class: "w3-button w3-theme-d2 w3-margin-bottom") do %>
+                  <i class="fa fa-comment"></i> Leave a Comment
                 <% end %>
-        <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i> Leave a Comment</button> 
-      </div>
+        </div>
       </div>
       <%end%>
       

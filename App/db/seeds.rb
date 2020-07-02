@@ -11,14 +11,20 @@ Post.destroy_all
 Tag.destroy_all
 PostTag.destroy_all
 Comment.destroy_all
+CommentLike.destroy_all
 Like.destroy_all
+Conversation.destroy_all
+Message.destroy_all
 
 User.reset_pk_sequence
 Post.reset_pk_sequence
 Tag.reset_pk_sequence
 PostTag.reset_pk_sequence
 Comment.reset_pk_sequence
+CommentLike.reset_pk_sequence
 Like.reset_pk_sequence
+Conversation.reset_pk_sequence
+Message.reset_pk_sequence
 
 u1 = User.create(user_name: 'Joao', password: '123', password_confirmation: '123')
 u2 = User.create(user_name: 'Eric', password: '123', password_confirmation: '123')
@@ -62,11 +68,18 @@ pt11 = PostTag.create(post_id: p5.id, tag_id: t2.id)
 pt12 = PostTag.create(post_id: p4.id, tag_id: t11.id)
 
 c1 = Comment.create(user_id: u1.id, post_id: p1.id, body:"nice")
-c2 = Comment.create(user_id: u1.id, post_id: p2.id, body:"very nice")
-c3 = Comment.create(user_id: u2.id, post_id: p2.id, body:"so nice")
-c4 = Comment.create(user_id: u3.id, post_id: p4.id, body:"great")
-c5 = Comment.create(user_id: u3.id, post_id: p5.id, body:"awful")
-c6 = Comment.create(user_id: u2.id, post_id: p6.id, body:"disgusting")
+c2 = Comment.create(user_id: u1.id, post_id: p1.id, body:"very nice")
+c3 = Comment.create(user_id: u2.id, post_id: p1.id, body:"so nice")
+c4 = Comment.create(user_id: u3.id, post_id: p1.id, body:"great")
+c5 = Comment.create(user_id: u3.id, post_id: p1.id, body:"awful")
+c6 = Comment.create(user_id: u2.id, post_id: p1.id, body:"disgusting")
+c7 = Comment.create(user_id: u2.id, post_id: p1.id, body:"not disgusting")
+c8 = Comment.create(user_id: u2.id, post_id: p1.id, body:"a little disgusting")
+c9 = Comment.create(user_id: u2.id, post_id: p1.id, body:"mildly disgusting")
+c10 = Comment.create(user_id: u2.id, post_id: p1.id, body:"cute")
+c11 = Comment.create(user_id: u2.id, post_id: p1.id, body:"ya donkey")
+c12 = Comment.create(user_id: u2.id, post_id: p1.id, body:"disgusting!!!!")
+c12 = Comment.create(user_id: u2.id, post_id: p3.id, body:"wow!!!!")
 
 cl1 = CommentLike.create(comment_id: c1.id, user_id: u2.id)
 cl2 = CommentLike.create(comment_id: c1.id, user_id: u1.id)
@@ -74,4 +87,13 @@ cl3 = CommentLike.create(comment_id: c2.id, user_id: u1.id)
 cl4 = CommentLike.create(comment_id: c2.id, user_id: u3.id)
 cl5 = CommentLike.create(comment_id: c2.id, user_id: u2.id)
 cl6 = CommentLike.create(comment_id: c4.id, user_id: u3.id)
+
+l1 = Like.create(post_id: p1.id, user_id: u1.id)
+l2 = Like.create(post_id: p1.id, user_id: u2.id)
+l3 = Like.create(post_id: p1.id, user_id: u3.id)
+l4 = Like.create(post_id: p3.id, user_id: u1.id)
+l5 = Like.create(post_id: p2.id, user_id: u3.id)
+l6 = Like.create(post_id: p8.id, user_id: u3.id)
+
+
 
