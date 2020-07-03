@@ -70,7 +70,7 @@
                  <% end%> <br>
                  <h6 class="w3-opacity">Create your own tag!</h6>
                  <%= f.fields_for :tags, @new_post.tags.build do |tag| %>
-                    <%= tag.text_field :name %> <br>
+                    <%= tag.text_field :name, placeholder: "Your New Tag!"%> <br>
                     <br>
                   <%end%>
                   <%= button_tag( class: "w3-button w3-theme") do %>
