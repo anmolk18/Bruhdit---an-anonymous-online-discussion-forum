@@ -1,3 +1,151 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.coolheader {
+  padding: 60px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-size: 30px;
+}
+
+.header {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+  font-size: 35px;
+  
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#navbar {
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 15%;
+    background-color: black;
+    position: fixed;
+    height: 100%;
+  }
+  
+  li a {
+    display: block;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  li a.active {
+    background-color: yellow;
+    color: green;
+  }
+  
+  li a:hover:not(.active) {
+    background-color: green;
+    color: white;
+  }
+
+}
+
+
+/* Style the content */
+.content {
+  text-align: center;
+  background-color: #ddd;
+  margin-left:15%;
+  padding:1px 16px;
+  height: 500px;
+  overflow: auto;
+}
+
+
+.dropbtn {
+  background-color: grey;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width: 128px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a,form {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+background-color: #4d4e4d;
+}
+
+.container {
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+overflow:auto;
+text-align: left;
+}
+
+.container > div {
+background-color: #959393;
+margin: 10px;
+padding: 20px;
+font-size: 30px;
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15%;
+}
+
+a {
+  color: lightblue;
+  font-size: 40px;
+  display: inline;
+}
+
+li a {
+  color: black;
+  font-size: 30px;
+}
+}

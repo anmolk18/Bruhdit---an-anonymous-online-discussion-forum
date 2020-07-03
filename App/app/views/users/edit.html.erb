@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<%= stylesheet_link_tag "sessions" %>
+</head>
+<body>
+<%=form_for @user do |f|%>
+  <h2>Update Profile</h2>
+        <p>
+            <%= f.label :user_name, "Username", class: "floatLabel" %>
+            <%= f.text_field :user_name, class: "floatLabel"%>
+        </p>
+        <p>
+            <%= f.label :password, "New Password", class: "floatLabel" %>
+            <%= f.password_field :password, class: "floatLabel"%>
+            <span>Retype old password to keep it the same.</span>
+        </p>
+        <p>
+            <%= f.label :password_confirmation, "Confirm Password", class: "floatLabel" %>
+            <%= f.password_field :password_confirmation, class: "floatLabel"%>
+            <span>Retype old password to keep it the same.</span>
+        </p>
+        <p>
+            <%= f.label :image, "Image URL", class: "floatLabel" %>
+            <%= f.text_field :image, class: "floatLabel"%>
+        </p>
+        <p>
+            <%= f.submit 'Update'%>
+        </p>
+  <% end%>
+</body>
+</html>
+

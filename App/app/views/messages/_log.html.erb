@@ -1,0 +1,41 @@
+<div class="mesgs">
+          <div class="msg_history">
+          <%if !@chat.messages.empty?%>
+          <% @chat.sorted_messages().each do |message|%>
+            <%p message%>
+            <% if message.user_id != @current_user.id%>
+              <div class="incoming_msg">
+                <div class="incoming_msg_img"> <img src=<%=@chat.other_user(@current_user).image%> alt="sunil"> </div>
+                <div class="received_msg">
+                  <div class="received_withd_msg">
+                    <p><%= message.body%></p>
+                    <span class="time_date"> <%= "#{message.chat_time}"%> </span></div>
+                </div>
+              </div>
+            <%else%>
+              <div class="outgoing_msg">
+              <div class="sent_msg">
+                <p><%= message.body%></p>
+                    <span class="time_date"> <%= "#{message.chat_time}"%> </span></div>
+            </div>
+            <%end%>
+          <%end%>
+          <%end%>
+          <div class="type_msg">
+            <div class="input_msg_write">
+            <%= form_for @message, url: conversation_messages_path(@chat.id), html: {class: "ui reply form"} do |f| %>
+                <%= f.hidden_field :conversation_id, value: @chat.id %>
+                <div class="field">
+                <%= f.text_area :body, class: "w3-input w3-border w3-padding", placeholder:"Type a message" %>
+                </div>
+                <%= f.text_field :user_id, value: current_user.id, type: "hidden" %>
+                <div>
+                <%= button_tag( class: "w3-button w3-theme-d2 w3-margin-rg") do %>
+                    <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                  <% end %>
+                </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>

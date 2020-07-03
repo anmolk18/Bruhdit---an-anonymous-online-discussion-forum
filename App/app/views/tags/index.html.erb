@@ -1,4 +1,54 @@
-<%= content_tag(:h1,"Tags:")%>
-<% @tags.each do |tag| %>
-    <%= content_tag(:p, link_to(tag.name.titleize, tag_path(tag)))%>
+<%= content_for :navbar do%>
+<a href="/home" class="w3-bar-item w3-button w3-padding-large" ><i class="fa fa-home w3-margin-right"></i>Bruhdit</a>
+  <a href="/posts" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white " title="All Posts"><i class="fa fa-globe"></i></a>
+  <a href="/tags" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-theme-d4" title="All Tags"><i class="fa fa-tags"></i></a>
+  <div class="w3-dropdown-hover w3-hide-small">
+  </div>
+  <%= button_to("Logout", '/logout',  {method: :post, class: 'w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white'})%>
+  <%= link_to(conversations_path, class: "w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white") do %>
+      <i class="fa fa-envelope"></i><span class="w3-badge w3-right w3-small w3-green"><%= User.find(session[:user_id]).unread_messages%></span>
+  <%end%>
+  <%= link_to('/analytics', class: "w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white") do %>
+    <i class="fa fa-line-chart"></i>
+  <%end%>
+<%end%>
+<% content_for :page_container do %>
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+
+  <!--Left Column -->
+  <%= render 'layouts/left'%>   
+   
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+     
+     <div class="w3-container w3-theme-d1 w3-margin">
+        <h1>All Tags</h1>
+      </div>
+
+      <% @tags.each do |tag|%>
+        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, link_to(tag.name, tag_path(tag)), class: "w3-left w3-circle w3-margin-right")%>
+  
+      </div>
+      <%end%>
+      
+     
+      
+    <!-- End Middle Column -->
+    </div>
+    
+    <!-- Right Column -->
+    <div class="w3-col m2">
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+<!-- End Page Container -->
+</div>
+<br>
 <%end%>

@@ -1,10 +1,85 @@
 <%=render 'layouts/flash'%>
-<%=form_for @post do |f|%>
-  Title: <%= f.text_field :title %><br />
-  Body: <%= f.text_area :body %><br />
-  Tags: <%= f.collection_check_boxes(:tag_ids, @tags, :id, :name)%>
-  <%= f.fields_for :tags, @post.tags.build do |tag| %>
-    <%= tag.text_field :name %> <br>
+
+<%= content_for :navbar do%>
+<a href="/home" class="w3-bar-item w3-button w3-padding-large" ><i class="fa fa-home w3-margin-right"></i>Bruhdit</a>
+  <a href="/posts" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="All Posts"><i class="fa fa-globe"></i></a>
+  <a href="/tags" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="All Tags"><i class="fa fa-tags"></i></a>
+  <div class="w3-dropdown-hover w3-hide-small">
+  </div>
+  <%= button_to("Logout", '/logout',  {method: :post, class: 'w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white'})%>
+  <%= link_to(conversations_path, class: "w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white") do %>
+      <i class="fa fa-envelope"></i><span class="w3-badge w3-right w3-small w3-green"><%= User.find(session[:user_id]).unread_messages%></span>
   <%end%>
-  <%=f.submit 'Submit'%>
+  <%= link_to('/analytics', class: "w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white") do %>
+    <i class="fa fa-line-chart"></i>
+  <%end%>
+<%end%>
+
+<% content_for :page_container do %>
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px; margin-bottom:170px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+  
+   <%= render 'left'%>
+
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+    
+      <div class="w3-row-padding">
+              <div class="w3-col m12">
+                <div class="w3-card w3-round w3-white">
+                  <div class="w3-container w3-padding">
+                    <h6 class="w3-opacity">Edit your Post!</h6>
+                    <%= form_for(@post) do |f|%>
+                      <%= f.text_field :title, placeholder: "Your Post's Title!", class: "w3-input w3-border w3-padding"%><br /> 
+                      <%= f.text_area :body, placeholder: "Your New Post!", class: "w3-input w3-border w3-padding"%><br />
+                      <%= f.collection_check_boxes(:tag_ids, @tags, :id, :name) do |b|%>
+                          <%=b.label(:"data-value" => b.value) { b.check_box + b.text}%>
+                      <% end%> <br>
+                      <%= f.fields_for :tags, @post.tags.build do |tag| %>
+                          <%= tag.text_field :name %> <br>
+                        <%end%>
+                        <%= button_tag( class: "w3-button w3-theme") do %>
+                          <i class="fa fa-pencil"></i> Post
+                        <% end %>
+                    <%end%>
+
+                    <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
+                    <% if pre_like %>
+                      <%= button_to '❌ Unlike', post_like_path(@post, pre_like), method: :delete %>
+                    <% else %>
+                      <%= button_to '❤️ Like', post_likes_path(@post), { method: :post} %>
+                    <% end %> <br>
+                    <%if @current_user.id == @post.user_id%>
+                      <%= button_to "Delete Post", post_path(@post), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
+                    <% end %>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          <br>
+          <div class ="w3-row">         
+
+      <%=render 'comments'%>
+
+      
+    <!-- End Middle Column -->
+    </div>
+    
+    <!-- Right Column -->
+    <div class="w3-col m2">
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+<!-- End Page Container -->
+</div>
+<br>
+
 <%end%>

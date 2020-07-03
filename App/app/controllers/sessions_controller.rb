@@ -1,11 +1,13 @@
 class SessionsController < ApplicationController
     skip_before_action :authorized, only: [:new, :create, :welcome]
+    skip_before_action :verify_authenticity_token
     before_action :redirect_to_home, only: [:welcome, :new]
 
     def welcome
     end
 
     def new
+      @user = User.new
     end
     
     def create

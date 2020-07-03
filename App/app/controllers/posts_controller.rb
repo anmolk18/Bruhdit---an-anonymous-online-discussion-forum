@@ -1,6 +1,16 @@
 class PostsController < ApplicationController
     before_action :current_post, only: [:show, :edit, :update, :destroy]
     before_action :allowed_user, only: [:edit, :update, :destroy]
+    before_action :remember_location, only: [:show, :edit]
+    layout 'base'
+    def index
+        @current_user = current_user
+        @posts = Post.ordered_by_creation
+        @tags = Tag.all
+        @top_ten_tags = Tag.tag_colors
+        @new_post = Post.new
+    end
+    
     def new
         @post = Post.new
         @tags = Tag.all
@@ -10,19 +20,28 @@ class PostsController < ApplicationController
     def create
         @post = Post.new(post_params)
         @post.user_id = current_user.id
-        validate(new_post_path)
+        validate(home_path)
     end
 
     def show
         @current_user = current_user
-        @comments = @post.comments
+        @comments = @post.comments_to_display
+        @top_three_comments = @post.top_three_post_comments.keys
+        @top_ten_tags = Tag.tag_colors
+        @new_comment = Comment.new()
     end
 
     def edit
         @tags = Tag.all
+        @post = current_post
+        @current_user = current_user
+        @top_ten_tags = Tag.tag_colors
+        @top_three_comments = @post.top_three_post_comments.keys
+        @comments = @post.comments_to_display
     end 
 
     def update 
+        @current_user = current_user
         @post.update(post_params)
         validate(edit_post_path)
     end 
