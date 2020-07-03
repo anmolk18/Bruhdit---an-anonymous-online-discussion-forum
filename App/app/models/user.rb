@@ -17,7 +17,9 @@ class User < ApplicationRecord
     end
 
     def sorted_chats
-        chats.sort_by(&:updated_at)
+        chats.sort_by{|chat|
+            chat.message_timestamp.to_i
+    }.reverse
     end
 
     def messages

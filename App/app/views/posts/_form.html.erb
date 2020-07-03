@@ -84,6 +84,13 @@
         <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
         <hr class="w3-clear">
+        <%current_conversation = @current_user.convo_exists?(comment.user)%>
+        <%if current_conversation%>
+          <%= content_tag(:h6, link_to(comment.user.user_name, conversation_messages_path(current_conversation)), class: "w3-left w3-circle w3-margin-right")%><br />
+        <%else%>
+          <%= content_tag(:h6, button_to(comment.user.user_name, conversations_path(sender_id: @current_user.id, recipient_id: comment.user.id)), class: "w3-left w3-circle w3-margin-right")%><br/>
+          <br>
+        <%end%>
         <img src=<%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, comment.body, class: "w3-left")%>
           <br>
@@ -108,6 +115,13 @@
         <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
         <hr class="w3-clear">
+        <%current_conversation = @current_user.convo_exists?(comment.user)%>
+        <%if current_conversation%>
+          <%= content_tag(:h6, link_to(comment.user.user_name, conversation_messages_path(current_conversation)), class: "w3-left w3-circle w3-margin-right")%><br />
+        <%else%>
+          <%= content_tag(:h6, button_to(comment.user.user_name, conversations_path(sender_id: @current_user.id, recipient_id: comment.user.id)), class: "w3-left w3-circle w3-margin-right")%><br/>
+          <br>
+        <%end%>
         <img src= <%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, comment.body, class: "w3-left")%>
           <br>

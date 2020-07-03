@@ -29,5 +29,13 @@ class Conversation < ApplicationRecord
         Message.create(body: 'Hello, welcome to our website!', conversation_id: convo.id, user_id: bot.id)
     end
 
+    def latest_convo_time
+        self.messages
+    end
+
+    def message_timestamp
+        self.messages.empty? ? self.created_at : self.messages.max_by(&:created_at).created_at
+    end
+
 end
   
