@@ -33,7 +33,6 @@ class MessagesController < ApplicationController
   def create
    @message = @conversation.messages.new(message_params)
    if @message.save
-    #  @conversation.messages.create(user_id: User.find_by(user_name: "Bruhdit_Bot"), body: "Taco") if @message.body == "!!!Taco Time!!!" && (@conversation.sender_id == 4 || @conversation.recipient_id == 4)
     redirect_to conversations_path(@conversation)
    end
   end
