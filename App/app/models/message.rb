@@ -8,7 +8,8 @@ class Message < ActiveRecord::Base
     end
 
     def chat_time
-        time = created_at.in_time_zone('EST')
+        
+        time = self.created_at.in_time_zone('Eastern Time (US & Canada)')
         base_form = time.strftime("%l:%M %P    |    ")
         if self.created_at.to_date.today?
             base_form + "Today"

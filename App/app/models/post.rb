@@ -9,6 +9,10 @@ class Post < ApplicationRecord
     validates :body, presence: true
     accepts_nested_attributes_for :tags, allow_destroy: true, reject_if: :all_blank
 
+
+    def summary
+        self.body[0..1000] + "..."
+    end
     #like-related post methods
     def self.like_count_hash
         posts = {}

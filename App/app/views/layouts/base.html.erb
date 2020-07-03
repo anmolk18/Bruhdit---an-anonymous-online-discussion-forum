@@ -24,7 +24,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
   </div>
   <%= button_to("Logout", '/logout',  {method: :post, class: 'w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white'})%>
   <%= link_to(conversations_path, class: "w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white") do %>
-      <i class="fa fa-envelope"></i><span class="w3-badge w3-right w3-small w3-green">3</span>
+      <i class="fa fa-envelope"></i><span class="w3-badge w3-right w3-small w3-green"><%= User.find(session[:user_id]).unread_messages%></span>
   <%end%>
   <%= link_to('/analytics', class: "w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white") do %>
     <i class="fa fa-line-chart"></i>
@@ -44,7 +44,7 @@ html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
 
 <!-- Footer -->
 <footer class="w3-container w3-theme-d3 w3-padding-16">
-  <h5>Footer</h5>
+  <h5>Created with ❤️ by Anmolpreet Kaur, Eric Ou, and João Cardoso</h5>
 </footer>
 
 </body>

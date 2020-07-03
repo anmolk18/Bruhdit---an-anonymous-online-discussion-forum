@@ -15,6 +15,19 @@ class User < ApplicationRecord
     def chats
         convos = Conversation.where("sender_id = ? OR recipient_id = ?", self.id, self.id)
     end
+
+    def messages
+        chats.map{|chat| chat.messages}.flatten
+    end
+
+    def unread_messages
+        messages.map {|message| message.read ? 0 : 1}.sum
+    end
+
+    def convo_exists?(other_user)
+        Conversation.find{|conversation| (conversation.sender_id == self.id && conversation.recipient_id == other_user.id) || (conversation.sender_id == other_user.id && conversation.recipient_id == self.id)}
+    end
+
     def self.post_count_hash
         users = {}
         User.all.each do |user|

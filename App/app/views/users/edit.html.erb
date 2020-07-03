@@ -12,15 +12,17 @@
             <%= f.text_field :user_name, class: "floatLabel"%>
         </p>
         <p>
-            <%= f.label :password, "Password", class: "floatLabel" %>
+            <%= f.label :password, "New Password", class: "floatLabel" %>
             <%= f.password_field :password, class: "floatLabel"%>
+            <span>Retype old password to keep it the same.</span>
         </p>
         <p>
             <%= f.label :password_confirmation, "Confirm Password", class: "floatLabel" %>
             <%= f.password_field :password_confirmation, class: "floatLabel"%>
+            <span>Retype old password to keep it the same.</span>
         </p>
         <p>
-            <%= f.submit 'Sign Up'%>
+            <%= f.submit 'Update'%>
         </p>
   <% end%>
 </body>

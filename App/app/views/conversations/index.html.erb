@@ -44,7 +44,7 @@
               <div class="chat_people">
                 <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                 <div class="chat_ib">
-                  <h5><%=chat.other_user(@current_user).user_name%> <span class="chat_date">Dec 25</span></h5>
+                  <h5><%=link_to(chat.other_user(@current_user).user_name, conversation_messages_path(chat))%> <span class="chat_date">Dec 25</span></h5>
                 </div>
               </div>
             </div>

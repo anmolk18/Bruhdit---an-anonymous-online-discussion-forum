@@ -4,6 +4,7 @@ class ConversationsController < ApplicationController
       @current_user = current_user
       @chats = @current_user.chats
       @message = Message.new
+      @chats.first.read_messages
     end
 
     def show()

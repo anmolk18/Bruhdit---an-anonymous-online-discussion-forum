@@ -32,6 +32,11 @@ class PostsController < ApplicationController
 
     def edit
         @tags = Tag.all
+        @post = current_post
+        @current_user = current_user
+        @top_ten_tags = Tag.tag_colors
+        @top_three_comments = @post.top_three_post_comments.keys
+        @comments = @post.comments_to_display
     end 
 
     def update 

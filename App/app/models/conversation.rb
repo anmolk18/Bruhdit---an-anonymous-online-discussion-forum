@@ -14,11 +14,17 @@ class Conversation < ApplicationRecord
     end
 
     def sorted_messages()
-        self.messages.sort_by(&:updated_at)
+        self.messages.select{|message| message.id != nil}
+    end
+
+    def read_messages()
+        self.messages.each do |message|
+            message.update(read: true)
+        end
     end
 
     def self.default_convo(new_user_id)
-        bot = User.find_by(user_name: "Bot")
+        bot = User.find_by(user_name: "Bruhdit_Bot")
         convo = self.create(sender_id: bot.id, recipient_id: new_user_id)
         Message.create(body: 'Hello, welcome to our website!', conversation_id: convo.id, user_id: bot.id)
     end

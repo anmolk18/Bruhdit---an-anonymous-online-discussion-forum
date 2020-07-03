@@ -9,7 +9,7 @@
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
          <h4 class="w3-center"><%= "#{@current_user.user_name}'s Profile"%></h4>
-         <p class="w3-center"><img src="/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p class="w3-center"><img src=<%=@current_user.image%> class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <p> <%= link_to("Edit User Profile", edit_user_path(@current_user), class:  'w3-bar-item w3-button w3-hide-small w3-middle w3-hover-lightgrey')%></p>
          <p> <%= button_to("Delete Account", '/users/destroy',  {method: :delete, class: 'w3-bar-item w3-button w3-hide-small w3-center w3-hover-lightgrey'})%></p>
@@ -41,7 +41,15 @@
         <span class="w3-right w3-opacity"><%= "#{pluralize(@post.likes.count, "Like")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= time_ago_in_words(@post.created_at)+ " ago"%></span>
         <hr class="w3-clear">
-        <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left" style="width:60px">
+        <%current_conversation = @current_user.convo_exists?(@post.user)%>
+        <%if current_conversation%>
+          <%= content_tag(:h6, link_to(@post.user.user_name, conversation_messages_path(current_conversation)), class: "w3-left w3-circle w3-margin-right")%><br />
+        <%else%>
+          <%= content_tag(:h6, button_to(@post.user.user_name, conversations_path(sender_id: @current_user.id, recipient_id: @post.user.id)), class: "w3-left w3-circle w3-margin-right")%><br/>
+          <br>
+        <%end%>
+        <br>
+        <img src= <%=@current_user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, @post.body, class: "w3-left")%>
           <div class="w3-row-padding" style="margin:0 -16px">
             <div class ="w3-row">
@@ -60,6 +68,10 @@
                 <% else %>
                   <%= button_to '❤️ Like', post_likes_path(@post), { method: :post} %>
                 <% end %> <br>
+                <%if @current_user.id == @post.user_id%>
+                <%= button_to "Edit Post", edit_post_path(@post), method: :get, params: {user_id: @current_user.id, post_id: @post.id}%>
+                <%= button_to "Delete Post", post_path(@post), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
+                <% end %>
                 
       </div>
       </div>
@@ -81,14 +93,13 @@
         </div>
       </div>
 
-
+      <h5 class="w3-opacity">Top Comments</h5>
       <% @top_three_comments.each do |comment|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-                      <h5 class="w3-opacity">Top Three Comment</h5>
         <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
         <hr class="w3-clear">
-        <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left" style="width:60px">
+        <img src=<%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, comment.body, class: "w3-left")%>
           <br>
           <div class ="w3-row">
@@ -106,6 +117,7 @@
       </div>
       <%end%>
 
+      <h5 class="w3-opacity">All Comments</h5>
       <% @comments.each do |comment|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
         <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>

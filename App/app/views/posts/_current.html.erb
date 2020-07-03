@@ -81,7 +81,7 @@
         </div>
       </div>
 
-
+      <h5 class="w3-opacity">Top Comments</h5>
       <% @top_three_comments.each do |comment|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
                       <h5 class="w3-opacity">Top Three Comment</h5>
@@ -106,6 +106,7 @@
       </div>
       <%end%>
 
+      <h5 class="w3-opacity">All Comments</h5>
       <% @comments.each do |comment|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
         <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>

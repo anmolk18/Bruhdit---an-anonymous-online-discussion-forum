@@ -6,7 +6,8 @@ class MessagesController < ApplicationController
   def index
     @current_user = current_user
     @chats = @current_user.chats
-   @messages = @conversation.messages
+    @messages = @conversation.messages
+    @conversation.read_messages()
     if @messages.length > 10
      @over_ten = true
      @messages = @messages[-10..-1]
@@ -27,6 +28,7 @@ class MessagesController < ApplicationController
   def new
    @message = @conversation.messages.new
   end
+  
   def create
    @message = @conversation.messages.new(message_params)
    if @message.save

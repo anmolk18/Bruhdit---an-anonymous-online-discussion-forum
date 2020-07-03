@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     skip_before_action :authorized, only: [:new, :create]
-    layout 'base', except: [:new, :create] 
+    layout 'base', except: [:new, :edit]
     #Sign Up for a user.
     def new
         redirect_to '/home' if logged_in?
@@ -22,6 +22,7 @@ class UsersController < ApplicationController
     end 
 
     def update 
+        @user = current_user 
         @user.update(user_params)
         validate(edit_user_path)
     end 
