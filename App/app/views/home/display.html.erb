@@ -66,7 +66,7 @@
                  <%= f.text_field :title, placeholder: "Your Post's Title!", class: "w3-input w3-border w3-padding"%><br /> 
                  <%= f.text_area :body, placeholder: "Your New Post!", class: "w3-input w3-border w3-padding"%><br />
                  <%= f.collection_check_boxes(:tag_ids, @tags, :id, :name) do |b|%>
-                    <%=b.label(:"data-value" => b.value) { b.check_box + b.text}%>
+                    <%=b.label(:"data-value" => b.value, class: ) { b.check_box + b.text}%>
                  <% end%> <br>
                  <h6 class="w3-opacity">Create your own tag!</h6>
                  <%= f.fields_for :tags, @new_post.tags.build do |tag| %>
