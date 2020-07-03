@@ -6,7 +6,7 @@ Bruhdit is an app that allows users to participate in an anonymous online discus
 
 Clone this repository onto your local machine and `cd` into it.
 
-Run `bundle install` to download all the necesaary gems.
+Run `bundle install` to download all the necessary gems.
 
 Run `rails db:migrate` to create the database. 
 
