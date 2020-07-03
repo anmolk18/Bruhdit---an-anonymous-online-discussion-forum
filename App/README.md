@@ -8,10 +8,6 @@ Clone this repository onto your local machine and `cd` into it.
 
 Run `bundle install` to download all the necessary gems.
 
-Run `rails db:migrate` to create the database. 
-
-Run `rails db:seed` to seed the data.
-
 Run `rails s` in your terminal and go to `localhost:3000` in your browser to start the app.
 
 ### Contributors
