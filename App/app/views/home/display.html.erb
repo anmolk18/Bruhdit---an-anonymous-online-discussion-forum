@@ -71,7 +71,6 @@
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
          <%= content_tag(:h4, link_to(post.title, post_path(post)), class: "w3-left w3-circle w3-margin-right")%>
         <span class="w3-right w3-opacity"><%= "#{pluralize(post.likes.count, "Like")}"%></span> <br>
-        <span class="w3-right w3-opacity"><%= "#{pluralize(post.comments.count, "Comment")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= time_ago_in_words(post.created_at)+ " ago"%></span>
         <hr class="w3-clear">
         <%current_conversation = @current_user.convo_exists?(post.user)%>
@@ -82,7 +81,7 @@
           <br>
         <%end%>
         <br>
-        <img src=<%=post.user.image%> alt="Avatar" class="w3-left" style="width:60px">
+        <img src=<%=@current_user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, post.summary, class: "w3-left")%>
           <div class="w3-row-padding" style="margin:0 -16px">
             <div class ="w3-row">

@@ -1,4 +1,4 @@
-
+<%= stylesheet_link_tag "posts" %>
 <% content_for :page_container do %>
 <!-- Page Container -->
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
@@ -12,8 +12,8 @@
          <h4 class="w3-center"><%= "#{@current_user.user_name}'s Profile"%></h4>
          <p class="w3-center"><img src=<%=@current_user.image%> class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
-         <p> <%= link_to("Edit User Profile", edit_user_path(@current_user), class:  'w3-bar-item w3-button w3-hide-small w3-middle w3-hover-lightgrey')%></p>
-         <p> <%= button_to("Delete Account", '/users/destroy',  {method: :delete, class: 'w3-bar-item w3-button w3-hide-small w3-center w3-hover-lightgrey'})%></p>
+         <p> <%= link_to("Edit User Profile", edit_user_path(@current_user), class:  'w3-bar-item w3-button w3-hide-small w3-hover-lightgrey w3-center')%></p>
+         <p> <%= button_to("Delete Account", '/users/destroy',  {method: :delete, class: 'w3-bar-item w3-button w3-hide-small w3-hover-lightgrey '})%></p>
         </div>
       </div>
       <br>

@@ -17,6 +17,10 @@ class Conversation < ApplicationRecord
         self.messages.select{|message| message.id != nil}
     end
 
+    def num_unread
+        self.messages.reduce(0){|total, m| m.read ? 0 : 1 }
+    end
+
     def read_messages()
         self.messages.each do |message|
             message.update(read: true)
@@ -27,10 +31,6 @@ class Conversation < ApplicationRecord
         bot = User.find_by(user_name: "Bruhdit_Bot")
         convo = self.create(sender_id: bot.id, recipient_id: new_user_id)
         Message.create(body: 'Hello, welcome to our website!', conversation_id: convo.id, user_id: bot.id)
-    end
-
-    def latest_convo_time
-        self.messages
     end
 
     def message_timestamp

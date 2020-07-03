@@ -8,11 +8,16 @@
       <!-- Profile -->
       <div class="w3-card w3-round w3-white">
         <div class="w3-container">
-         <h4 class="w3-center"><%= "#{@current_user.user_name}'s Profile"%></h4>
-         <p class="w3-center"><img src=<%=@current_user.image%> class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <h4 class="w3-center"><%= "#{@post.user.user_name}'s Profile"%></h4>
+         <p class="w3-center"><img src=<%=@post.user.image%> class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
-         <p> <%= link_to("Edit User Profile", edit_user_path(@current_user), class:  'w3-bar-item w3-button w3-hide-small w3-middle w3-hover-lightgrey')%></p>
-         <p> <%= button_to("Delete Account", '/users/destroy',  {method: :delete, class: 'w3-bar-item w3-button w3-hide-small w3-center w3-hover-lightgrey'})%></p>
+         <%current_conversation = @current_user.convo_exists?(@post.user)%>
+        <%if current_conversation%>
+          <%= content_tag(:h6, link_to(" Chat with #{@post.user.user_name}!", conversation_messages_path(current_conversation)), class: "w3-center w3-circle w3-margin-right")%><br />
+        <%else%>
+          <%= content_tag(:h6, button_to("Chat with #{@post.user.user_name}!", conversations_path(sender_id: @current_user.id, recipient_id: @post.user.id)), class: "w3-center w3-circle w3-margin-right")%><br/>
+          <br>
+        <%end%>
         </div>
       </div>
       <br>
@@ -37,21 +42,12 @@
     <div class="w3-col m7">
     
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-         <%= content_tag(:h4, @post.title, class: "w3-left w3-circle w3-margin-right")%>
+         <%= content_tag(:h2, @post.title, class: "w3-left w3-circle w3-margin-right")%>
         <span class="w3-right w3-opacity"><%= "#{pluralize(@post.likes.count, "Like")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= "#{pluralize(@post.comments.count, "Comment")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= time_ago_in_words(@post.created_at)+ " ago"%></span>
         <hr class="w3-clear">
-        <%current_conversation = @current_user.convo_exists?(@post.user)%>
-        <%if current_conversation%>
-          <%= content_tag(:h6, link_to(@post.user.user_name, conversation_messages_path(current_conversation)), class: "w3-left w3-circle w3-margin-right")%><br />
-        <%else%>
-          <%= content_tag(:h6, button_to(@post.user.user_name, conversations_path(sender_id: @current_user.id, recipient_id: @post.user.id)), class: "w3-left w3-circle w3-margin-right")%><br/>
-          <br>
-        <%end%>
-        <br>
-        <img src= <%=@post.user.image%> alt="Avatar" class="w3-left" style="width:60px">
-        <%= content_tag(:p, @post.body, class: "w3-left")%>
+        <%= content_tag(:h4, @post.body, class: "w3-left")%>
           <div class="w3-row-padding" style="margin:0 -16px">
             <div class ="w3-row">
               Tags:
@@ -97,17 +93,17 @@
       <h5 class="w3-opacity">Top Comments</h5>
       <% @top_three_comments.each do |comment|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
-        <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
-        <hr class="w3-clear">
-        <%current_conversation = @current_user.convo_exists?(comment.user)%>
+         <img src=<%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
+         <%current_conversation = @current_user.convo_exists?(comment.user)%>
         <%if current_conversation%>
           <%= content_tag(:h6, link_to(comment.user.user_name, conversation_messages_path(current_conversation)), class: "w3-left w3-circle w3-margin-right")%><br />
         <%else%>
           <%= content_tag(:h6, button_to(comment.user.user_name, conversations_path(sender_id: @current_user.id, recipient_id: comment.user.id)), class: "w3-left w3-circle w3-margin-right")%><br/>
           <br>
         <%end%>
-        <br>        <img src=<%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
+        <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
+        <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
+        <hr class="w3-clear">
         <%= content_tag(:p, comment.body, class: "w3-left")%>
           <br>
           <div class ="w3-row">
