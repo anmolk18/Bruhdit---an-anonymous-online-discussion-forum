@@ -16,6 +16,10 @@ class User < ApplicationRecord
         convos = Conversation.where("sender_id = ? OR recipient_id = ?", self.id, self.id)
     end
 
+    def sorted_chats
+        chats.sort_by(&:updated_at)
+    end
+
     def messages
         chats.map{|chat| chat.messages}.flatten
     end

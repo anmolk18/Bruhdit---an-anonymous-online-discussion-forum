@@ -49,7 +49,7 @@
           <br>
         <%end%>
         <br>
-        <img src= <%=@current_user.image%> alt="Avatar" class="w3-left" style="width:60px">
+        <img src= <%=@post.user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, @post.body, class: "w3-left")%>
           <div class="w3-row-padding" style="margin:0 -16px">
             <div class ="w3-row">

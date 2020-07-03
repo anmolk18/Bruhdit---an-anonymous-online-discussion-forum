@@ -2,7 +2,7 @@ class ConversationsController < ApplicationController
    layout 'base'
    def index
       @current_user = current_user
-      @chats = @current_user.chats
+      @chats = @current_user.sorted_chats
       @message = Message.new
       @chats.first.read_messages
     end

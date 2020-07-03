@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
   layout 'base'
   def index
     @current_user = current_user
-    @chats = @current_user.chats
+    @chats = @current_user.sorted_chats
     @messages = @conversation.messages
     @conversation.read_messages()
     if @messages.length > 10
