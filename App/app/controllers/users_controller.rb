@@ -14,7 +14,9 @@ class UsersController < ApplicationController
 
     
     def show
-        @user = current_user
+        @current_user = current_user
+        @posts = @current_user.posts
+        @top_ten_tags = Tag.tag_colors
     end
 
     def edit
