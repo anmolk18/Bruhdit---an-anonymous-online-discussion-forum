@@ -1,30 +1,63 @@
-<% if @over_ten %>
- <%= link_to "Show Previous", "?m=all" %>
-<% end %>
-<div class="ui segment">
- <% @messages.each do |message| %>
-  <% if message.body %>
-   <% user = User.find(message.user_id) %>
-   <div class="item">
-    <div class="content">
-     <div class="header"><strong><%= user.user_name %></strong>     <%= message.message_time %></div>
-      <div class="list">
-       <div class="item">
-        <i class="right triangle icon"></i>
-         <%= message.body %>
-      </div>
-    </div>
-   </div>
- </div>
- <% end %>
-<% end %>
+<% content_for :head do %>
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+<%= stylesheet_link_tag "inbox" %>
+</head>
+<%end%>
+
+<% content_for :page_container do %>
+
+<!-- Page Container -->
+
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+  <div class="container">
+<h3 class=" text-center">Messaging</h3>
+<div class="messaging">
+      <div class="inbox_msg">
+        <div class="inbox_people">
+          <div class="headind_srch">
+            <div class="recent_heading">
+              <h4>Messaged Users</h4>
+            </div>
+            <div class="srch_bar">
+              <div class="stylish-input-group">
+                <input type="text" class="search-bar"  placeholder="Search" >
+                <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span> </div>
+            </div>
+          </div>
+          <div class="inbox_chat">
+            
+            <div class="chat_list active_chat">
+              <div class="chat_people">
+                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  <h5><%= link_to(@chats.first.other_user(@current_user).user_name, conversation_messages_path(@chats.first))%> <span class="chat_date">Dec 25</span></h5>
+                </div>
+              </div>
+            </div>
+            
+            <% @chats[1..-1].each do |chat|%>
+              <div class="chat_list">
+              <div class="chat_people">
+                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                <div class="chat_ib">
+                  <h5><%=chat.other_user(@current_user).user_name%> <span class="chat_date">Dec 25</span></h5>
+                </div>
+              </div>
+            </div>
+            <%end%>            
+          </div>
+        </div>
+        <% @chat = @chats.first %>
+        
+        <%= render 'messages/log'%>
+      
+    </div></div>
+<!-- End Page Container -->
 </div>
-<%= form_for [@conversation, @message], html: {class: "ui reply form"} do |f| %>
- <div class="field">
-   <%= f.text_area :body, class: "form-control" %>
- </div>
- <%= f.text_field :user_id, value: current_user.id, type: "hidden" %>
- <div>
-   <%= f.submit "Add Reply", class: "ui blue labeled submit icon button" %>
- </div>
-<% end %>
+<br>
+
+<%end%>

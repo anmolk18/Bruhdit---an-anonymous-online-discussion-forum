@@ -1,0 +1,130 @@
+
+<% content_for :page_container do %>
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+  <!-- The Grid -->
+  <div class="w3-row">
+    <!-- Left Column -->
+    <div class="w3-col m3">
+      <!-- Profile -->
+      <div class="w3-card w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center"><%= "#{@current_user.user_name}'s Profile"%></h4>
+         <p class="w3-center"><img src="/w3images/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <hr>
+         <p> <%= link_to("Edit User Profile", edit_user_path(@current_user), class:  'w3-bar-item w3-button w3-hide-small w3-middle w3-hover-lightgrey')%></p>
+         <p> <%= button_to("Delete Account", '/users/destroy',  {method: :delete, class: 'w3-bar-item w3-button w3-hide-small w3-center w3-hover-lightgrey'})%></p>
+        </div>
+      </div>
+      <br>
+    
+      <!-- Top 10 Tags --> 
+      <div class="w3-card w3-round w3-white w3-hide-small">
+        <div class="w3-container">
+          <p>Top 10 Tags</p>
+          <p>
+            <% @top_ten_tags.each do |tag, color|%>
+              <%= content_tag(:span, link_to(tag.name.titleize, tag_path(tag)), class: color)%>
+            <%end%>
+          </p>
+        </div>
+      </div>
+      <br>
+    <!-- End Left Column -->
+    </div>
+    
+    <!-- Middle Column -->
+    <div class="w3-col m7">
+     
+     <div class="w3-container w3-theme-d1 w3-margin">
+        <h1>User Analytics</h1>
+      </div>
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Total # of Users: #{@user_count}", class: "w3-left w3-circle w3-margin-right")%> 
+      </div>
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Top 10 Most Active Users:", class: "w3-left w3-circle w3-margin-right")%> <br>
+         <br>
+         <ol>
+         <%@top_ten_most_active.each_pair do |user, value|%>
+            <li><%=user.user_name%></li><ul><li><%="#{value} Total Posts"%></li></ul>
+        <%end%>
+        </ol>
+      </div>
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Top 10 Most Popular Users:", class: "w3-left w3-circle w3-margin-right")%> <br>
+         <br>
+         <ol>
+         <%@top_ten_most_popular.each_pair do |user, value|%>
+            <li><%=user.user_name%></li><ul><li><%="#{value} Total Likes Received"%></li></ul>
+        <%end%>
+        </ol>
+      </div>
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Top 10 Biggest Likers:", class: "w3-left w3-circle w3-margin-right")%> <br>
+         <br>
+         <ol>
+         <%@top_ten_likers.each_pair do |user, value|%>
+            <li><%=user.user_name%></li><ul><li><%="#{value} Total Likes Given"%></li></ul>
+        <%end%>
+        </ol>
+      </div>        
+
+     <div class="w3-container w3-theme-d1 w3-margin">
+        <h1>Post Analytics</h1>
+      </div>
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Total # of Posts: #{@post_count}", class: "w3-left w3-circle w3-margin-right")%> 
+      </div>
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Top 10 Most Liked Posts:", class: "w3-left w3-circle w3-margin-right")%> <br>
+         <br>
+         <ol>
+         <%@top_ten_posts.each_pair do |post, value|%>
+            <li><%=link_to(post.title, post_path(post))%></li><ul><li><%="#{value} Total Likes Received"%></li></ul>
+        <%end%>
+        </ol>
+      </div>
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Top 10 Most Commented Posts:", class: "w3-left w3-circle w3-margin-right")%> <br>
+         <br>
+         <ol>
+         <%@top_ten_most_commented_posts.each_pair do |post, value|%>
+            <li><%=link_to(post.title, post_path(post))%></li><ul><li><%="#{value} Total Comments"%></li></ul>
+        <%end%>
+        </ol>
+      </div> 
+
+      <div class="w3-container w3-theme-d1 w3-margin">
+        <h1>Comment Analytics</h1>
+      </div>
+
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Total # of Comments: #{@comment_count}", class: "w3-left w3-circle w3-margin-right")%> 
+      </div>      
+
+      <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+         <%= content_tag(:h4, "Top 10 Most Liked Comments:", class: "w3-left w3-circle w3-margin-right")%> <br>
+         <br>
+         <ol>
+         <%@top_ten_comments.each_pair do |comment, value|%>
+            <li><%=link_to(comment.body, post_path(comment.post))%></li><ul><li><%="#{value} Total Likes"%></li></ul>
+        <%end%>
+        </ol>
+      </div> 
+
+    <!-- End Middle Column -->
+    </div>
+    
+    <!-- Right Column -->
+    <div class="w3-col m2">
+    <!-- End Right Column -->
+    </div>
+    
+  <!-- End Grid -->
+  </div>
+  
+<!-- End Page Container -->
+</div>
+<br>
+<%end%>

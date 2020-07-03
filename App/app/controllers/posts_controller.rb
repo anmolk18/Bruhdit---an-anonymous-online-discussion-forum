@@ -24,7 +24,8 @@ class PostsController < ApplicationController
 
     def show
         @current_user = current_user
-        @comments = @post.comments
+        @comments = @post.comments_to_display
+        @top_three_comments = @post.top_three_post_comments.keys
         @top_ten_tags = Tag.tag_colors
         @new_comment = Comment.new()
     end
@@ -34,6 +35,7 @@ class PostsController < ApplicationController
     end 
 
     def update 
+        @current_user = current_user
         @post.update(post_params)
         validate(edit_post_path)
     end 

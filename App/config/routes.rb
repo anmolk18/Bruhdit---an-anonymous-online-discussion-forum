@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   get '/home', to: 'home#display'
+  get '/analytics', to: 'home#analytics'
   root :to => 'sessions#welcome'
   
   resources :comments

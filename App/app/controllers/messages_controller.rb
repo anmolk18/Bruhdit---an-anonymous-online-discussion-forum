@@ -2,8 +2,10 @@ class MessagesController < ApplicationController
     before_action do
      @conversation = Conversation.find(params[:conversation_id])
     end
-    
+  layout 'base'
   def index
+    @current_user = current_user
+    @chats = @current_user.chats
    @messages = @conversation.messages
     if @messages.length > 10
      @over_ten = true
@@ -20,15 +22,19 @@ class MessagesController < ApplicationController
    end
   @message = @conversation.messages.new
    end
+
+
   def new
    @message = @conversation.messages.new
   end
   def create
    @message = @conversation.messages.new(message_params)
    if @message.save
-    redirect_to conversation_messages_path(@conversation)
+    redirect_to conversations_path(@conversation)
    end
   end
+
+
 
   private
 

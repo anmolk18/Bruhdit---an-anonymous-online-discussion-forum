@@ -60,9 +60,6 @@
                 <% else %>
                   <%= button_to '❤️ Like', post_likes_path(@post), { method: :post} %>
                 <% end %> <br>
-                <%= button_to(new_comment_path, method: :get, class: "w3-button w3-theme-d2 w3-margin-bottom", params: {user_id: @current_user.id, post_id: @post.id}) do %>
-                  <i class="fa fa-comment"></i> Add a Comment
-                <% end %>
                 
       </div>
       </div>
@@ -85,6 +82,30 @@
       </div>
 
 
+      <% @top_three_comments.each do |comment|%>
+        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                      <h5 class="w3-opacity">Top Three Comment</h5>
+        <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
+        <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
+        <hr class="w3-clear">
+        <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left" style="width:60px">
+        <%= content_tag(:p, comment.body, class: "w3-left")%>
+          <br>
+          <div class ="w3-row">
+                <% pre_like = comment.comment_likes.find { |like| like.user_id == current_user.id} %>
+                <% if pre_like %>
+                  <%= button_to '❌ Unlike', comment_comment_like_path(comment, pre_like), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
+                <% else %>
+                  <%= button_to '❤️ Like', comment_comment_likes_path(comment),  method: :post, params: {user_id: @current_user.id, post_id: @post.id} %>
+                <% end %>    
+                <%if @current_user.id == comment.user_id%>
+                  <%= button_to "Edit Comment", edit_comment_path(comment), method: :get, params: {user_id: @current_user.id, post_id: @post.id}%>
+                  <%= button_to"Delete Comment", comment_path(comment), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
+                <%end%>
+        </div>
+      </div>
+      <%end%>
+
       <% @comments.each do |comment|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
         <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
@@ -99,7 +120,11 @@
                   <%= button_to '❌ Unlike', comment_comment_like_path(comment, pre_like), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
                 <% else %>
                   <%= button_to '❤️ Like', comment_comment_likes_path(comment),  method: :post, params: {user_id: @current_user.id, post_id: @post.id} %>
-                <% end %>         
+                <% end %>    
+                <%if @current_user.id == comment.user_id%>
+                  <%= button_to "Edit Comment", edit_comment_path(comment), method: :get, params: {user_id: @current_user.id, post_id: @post.id}%>
+                  <%= button_to"Delete Comment", comment_path(comment), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
+                <%end%>
         </div>
       </div>
       <%end%>

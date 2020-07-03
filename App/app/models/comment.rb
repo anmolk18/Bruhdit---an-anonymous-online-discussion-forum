@@ -22,6 +22,11 @@ class Comment < ApplicationRecord
         comments.first(10).to_h
     end
 
+    def self.top_three_comments
+        comments = self.ordered_by_likes
+        comments.first(3).to_h
+    end
+
     def self.most_popular
         comments = self.ordered_by_likes
         comments.first

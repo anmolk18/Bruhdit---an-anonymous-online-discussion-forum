@@ -1,4 +1,11 @@
-<%= content_tag(:h1, "Welcome")%>
+<div class="w3-container w3-theme-d1 w3-margin">
+        <h1>Welcome</h1>
+      </div>
 <%= button_to "Login", '/login', method: :post%>
 <%= button_to "Sign up", new_user_path, method: :get%>
 
+
+
+
+<title>CSS Template</title>
+<%= stylesheet_link_tag "sessions" %>

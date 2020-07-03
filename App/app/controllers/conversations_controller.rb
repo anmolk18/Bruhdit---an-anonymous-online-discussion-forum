@@ -1,10 +1,13 @@
 class ConversationsController < ApplicationController
    layout 'base'
    def index
-
       @current_user = current_user
-      @users = User.all
-      @chatters = @current_user.chatting_users
+      @chats = @current_user.chats
+      @message = Message.new
+    end
+
+    def show()
+      @current_user = current_user
     end
     
    def create

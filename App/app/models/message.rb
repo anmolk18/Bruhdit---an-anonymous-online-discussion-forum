@@ -6,4 +6,16 @@ class Message < ActiveRecord::Base
     def message_time
      created_at.strftime("%m/%d/%y at %l:%M %p")
     end
+
+    def chat_time
+        time = created_at.in_time_zone('EST')
+        base_form = time.strftime("%l:%M %P    |    ")
+        if self.created_at.to_date.today?
+            base_form + "Today"
+        elsif self.created_at.to_date.yesterday == DateTime.yesterday
+            base_form + "Yesterday"
+        else
+            base_form + time.strftime("%b %-d")
+        end
+    end
 end

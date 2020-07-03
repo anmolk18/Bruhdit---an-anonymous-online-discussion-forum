@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
     before_action :current_comment, only: [:edit, :update, :destroy]
     before_action :allowed_user, only: [:edit, :update, :destroy]
+    layout 'base'
 
     def new
         @comment = Comment.new
@@ -17,14 +18,17 @@ class CommentsController < ApplicationController
 
     def edit
         @post_id = params[:post_id]
+        @post = Post.find(@post_id)
         @current_user_id = params[:user_id]
-        @post = @comment.post
-        @comments = @post.comments
+        @current_user = User.find(@current_user_id)
+        @top_ten_tags = Tag.tag_colors
+        @top_three_comments = @post.top_three_post_comments.keys
+        @comments = @post.comments_to_display
     end
 
     def update
         @comment.update(comment_params)
-        @comment.user == current_user
+        @comment.user = current_user
         validate(edit_comment_path)
     end
 

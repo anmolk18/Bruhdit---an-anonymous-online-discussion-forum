@@ -72,8 +72,17 @@ class Post < ApplicationRecord
         comments.first(10).to_h
     end
     
+    def top_three_post_comments
+        comments = self.comments_ordered_by_likes
+        comments.first(3).to_h
+    end
+
     def comments_ordered_by_creation
         self.comments.reverse
+    end
+
+    def comments_to_display
+        comments_ordered_by_creation.select{|comment| top_three_post_comments.include?(comment) == false}
     end
 
     def newest_ten_post_comments

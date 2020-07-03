@@ -12,11 +12,8 @@ class User < ApplicationRecord
     validates :user_name, format: { with: /[a-zA-Z0-9_]+/ }
     validates :user_name, length: {minimum: 3, maximum: 30}
     
-    def chatting_users
-        convos = Conversation.where("sender_id = ? | recipient_id = ?", self.id, self.id)
-        convos.map{|c| 
-            c.sender_id == self.id ? User.find(recipient_id) : User.find(sender_id)
-        }
+    def chats
+        convos = Conversation.where("sender_id = ? OR recipient_id = ?", self.id, self.id)
     end
     def self.post_count_hash
         users = {}
