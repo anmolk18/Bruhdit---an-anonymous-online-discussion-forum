@@ -135,6 +135,4 @@ class User < ApplicationRecord
         users.first
     end
 
-
-
 end

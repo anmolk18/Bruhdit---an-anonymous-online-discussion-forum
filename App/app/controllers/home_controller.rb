@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
+
     layout 'base'
+    before_action :remember_location
+
     def display
         @current_user = current_user
         @posts = Post.ordered_by_likes.keys

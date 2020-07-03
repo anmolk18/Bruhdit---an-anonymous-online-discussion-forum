@@ -1,11 +1,12 @@
 class LikesController < ApplicationController
     before_action :find_post
     before_action :find_like, only: [:destroy]
-
+    
     def create
         if !already_liked?
           @post.likes.create(user_id: current_user.id)
           redirect_to post_path(@post)
+          # back
         end
     end
 
@@ -14,6 +15,7 @@ class LikesController < ApplicationController
           @like.destroy
         end
         redirect_to post_path(@post)
+        # back
     end
 
    private

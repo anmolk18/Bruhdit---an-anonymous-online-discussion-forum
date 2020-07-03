@@ -7,17 +7,18 @@ Rails.application.routes.draw do
   get '/analytics', to: 'home#analytics'
   root :to => 'sessions#welcome'
   
-  resources :comments
+  resources :comments, only: [:new, :create, :edit, :update, :destroy]
   
-  resources :tags
+  resources :tags, only: [:index, :show]
 
   resources :comments do 
     resources :comment_likes 
   end 
 
   resources :posts do
-    resources :likes
+    resources :likes, only: [:create, :show, :destroy, :create]
   end
+
   resources :posts
   
   resources :users

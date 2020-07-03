@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
     before_action :current_post, only: [:show, :edit, :update, :destroy]
     before_action :allowed_user, only: [:edit, :update, :destroy]
+    before_action :remember_location, only: [:show, :edit]
     layout 'base'
     def index
         @current_user = current_user

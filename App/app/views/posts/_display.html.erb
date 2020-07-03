@@ -1,6 +1,6 @@
 <% @posts.each do |post|%>
         <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        
+
          <img src=<%=post.user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%current_conversation = @current_user.convo_exists?(post.user)%>
         <%if current_conversation%>
@@ -26,7 +26,6 @@
           </div>
           <br>
           <div class ="w3-row">
-
                 <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
                 <% if pre_like %>
                   <%= button_to '❌ Unlike', post_like_path(post, pre_like), method: :delete %>
@@ -36,7 +35,6 @@
                 <%= button_to(post_path(post), method: :get, class: "w3-button w3-theme-d2 w3-margin-bottom") do %>
                   <i class="fa fa-comment"></i> Leave a Comment
                 <% end %>
-           
         </div>
       </div>
       <%end%>
