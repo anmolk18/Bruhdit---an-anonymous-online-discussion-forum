@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root :to => 'sessions#welcome'
   
   resources :comments
+  
   resources :tags
 
   resources :comments do 
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
     resources :likes
   end
   resources :posts
+  
   resources :users
 
   resources :conversations do
