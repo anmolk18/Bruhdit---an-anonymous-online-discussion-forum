@@ -81,7 +81,7 @@
           <br>
         <%end%>
         <br>
-        <img src=<%=@current_user.image%> alt="Avatar" class="w3-left" style="width:60px">
+        <img src=<%=post.user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, post.summary, class: "w3-left")%>
           <div class="w3-row-padding" style="margin:0 -16px">
             <div class ="w3-row">
@@ -103,8 +103,6 @@
                 <%= button_to(post_path(post), method: :get, class: "w3-button w3-theme-d2 w3-margin-bottom") do %>
                   <i class="fa fa-comment"></i> Leave a Comment
                 <% end %>
-
-          
            
         </div>
       </div>

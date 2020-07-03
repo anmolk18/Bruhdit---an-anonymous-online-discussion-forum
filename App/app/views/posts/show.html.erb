@@ -123,7 +123,7 @@
         <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
         <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
         <hr class="w3-clear">
-        <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left" style="width:60px">
+        <img src=<%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
         <%= content_tag(:p, comment.body, class: "w3-left")%>
           <br>
           <div class ="w3-row">
