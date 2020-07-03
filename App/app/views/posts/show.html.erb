@@ -18,40 +18,8 @@
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px; margin-bottom:170px">    
   <!-- The Grid -->
   <div class="w3-row">
-    <!-- Left Column -->
-    <div class="w3-col m3">
-      <!-- Profile -->
-      <div class="w3-card w3-round w3-white">
-        <div class="w3-container">
-         <h4 class="w3-center"><%= "#{@post.user.user_name}'s Profile"%></h4>
-         <p class="w3-center"><img src=<%=@post.user.image%> class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
-         <hr>
-         <%current_conversation = @current_user.convo_exists?(@post.user)%>
-        <%if current_conversation%>
-          <%= content_tag(:h6, link_to(" Chat with #{@post.user.user_name}!", conversation_messages_path(current_conversation)), class: "w3-center w3-circle w3-margin-right")%><br />
-        <%else%>
-          <%= content_tag(:h6, button_to("Chat with #{@post.user.user_name}!", conversations_path(sender_id: @current_user.id, recipient_id: @post.user.id)), class: "w3-center w3-circle w3-margin-right")%><br/>
-          <br>
-        <%end%>
-        </div>
-      </div>
-      <br>
-    
-     <!-- Interests --> 
-      <div class="w3-card w3-round w3-white w3-hide-small">
-        <div class="w3-container">
-          <p>Top 10 Tags</p>
-          <p>
-            <% @top_ten_tags.each do |tag, color|%>
-              <%= content_tag(:span, link_to(tag.name.titleize, tag_path(tag)), class: color)%>
-            <%end%>
-          </p>
-        </div>
-      </div>
-      <br>
-    
-    <!-- End Left Column -->
-    </div>
+  <%=render 'left'%>
+
     
     <!-- Middle Column -->
     <div class="w3-col m7">
@@ -105,68 +73,7 @@
         </div>
       </div>
 
-      <h5 class="w3-opacity">Top Comments</h5>
-      <% @top_three_comments.each do |comment|%>
-        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-         <img src=<%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
-         <%current_conversation = @current_user.convo_exists?(comment.user)%>
-        <%if current_conversation%>
-          <%= content_tag(:h6, link_to(comment.user.user_name, conversation_messages_path(current_conversation)), class: "w3-left w3-circle w3-margin-right")%><br />
-        <%else%>
-          <%= content_tag(:h6, button_to(comment.user.user_name, conversations_path(sender_id: @current_user.id, recipient_id: comment.user.id)), class: "w3-left w3-circle w3-margin-right")%><br/>
-          <br>
-        <%end%>
-        <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
-        <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
-        <hr class="w3-clear">
-        <%= content_tag(:p, comment.body, class: "w3-left")%>
-          <br>
-          <div class ="w3-row">
-                <% pre_like = comment.comment_likes.find { |like| like.user_id == current_user.id} %>
-                <% if pre_like %>
-                  <%= button_to '❌ Unlike', comment_comment_like_path(comment, pre_like), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
-                <% else %>
-                  <%= button_to '❤️ Like', comment_comment_likes_path(comment),  method: :post, params: {user_id: @current_user.id, post_id: @post.id} %>
-                <% end %>    
-                <%if @current_user.id == comment.user_id%>
-                  <%= button_to "Edit Comment", edit_comment_path(comment), method: :get, params: {user_id: @current_user.id, post_id: @post.id}%>
-                  <%= button_to"Delete Comment", comment_path(comment), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
-                <%end%>
-        </div>
-      </div>
-      <%end%>
-
-      <h5 class="w3-opacity">All Comments</h5>
-      <% @comments.each do |comment|%>
-        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <span class="w3-right w3-opacity"><%= "#{pluralize(comment.comment_likes.count, "Like")}"%></span> <br>
-        <span class="w3-right w3-opacity"><%= time_ago_in_words(comment.created_at)+ " ago"%></span>
-        <hr class="w3-clear">
-        <%current_conversation = @current_user.convo_exists?(comment.user)%>
-        <%if current_conversation%>
-          <%= content_tag(:h6, link_to(comment.user.user_name, conversation_messages_path(current_conversation)), class: "w3-left w3-circle w3-margin-right")%><br />
-        <%else%>
-          <%= content_tag(:h6, button_to(comment.user.user_name, conversations_path(sender_id: @current_user.id, recipient_id: comment.user.id)), class: "w3-left w3-circle w3-margin-right")%><br/>
-          <br>
-        <%end%>
-        <br>
-        <img src=<%=comment.user.image%> alt="Avatar" class="w3-left" style="width:60px">
-        <%= content_tag(:p, comment.body, class: "w3-left")%>
-          <br>
-          <div class ="w3-row">
-                <% pre_like = comment.comment_likes.find { |like| like.user_id == current_user.id} %>
-                <% if pre_like %>
-                  <%= button_to '❌ Unlike', comment_comment_like_path(comment, pre_like), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
-                <% else %>
-                  <%= button_to '❤️ Like', comment_comment_likes_path(comment),  method: :post, params: {user_id: @current_user.id, post_id: @post.id} %>
-                <% end %>    
-                <%if @current_user.id == comment.user_id%>
-                  <%= button_to "Edit Comment", edit_comment_path(comment), method: :get, params: {user_id: @current_user.id, post_id: @post.id}%>
-                  <%= button_to"Delete Comment", comment_path(comment), method: :delete, params: {user_id: @current_user.id, post_id: @post.id}%>
-                <%end%>
-        </div>
-      </div>
-      <%end%>
+      <%=render 'comments'%>
       
     <!-- End Middle Column -->
     </div>
